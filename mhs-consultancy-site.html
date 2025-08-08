@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Hanif Sattar | MHS Consultancy</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;800&display=swap" rel="stylesheet" />
+<style>
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #1c1f2b, #2f3545);
+    color: #fff;
+    margin: 0; padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  header {
+    padding: 20px;
+    font-weight: 700;
+    font-size: 1.3em;
+    color: #ffa726;
+    width: 100%;
+    text-align: center;
+  }
+  section {
+    max-width: 700px;
+    width: 100%;
+    padding: 40px 20px;
+    text-align: center;
+  }
+  h1 {
+    font-weight: 800;
+    font-size: 2.8em;
+    margin-bottom: 0.2em;
+  }
+  h2 {
+    color: #ffcc80;
+    margin-bottom: 0.7em;
+  }
+  p {
+    color: #ccc;
+    line-height: 1.6;
+    font-size: 1.1em;
+  }
+  .contact {
+    margin: 25px 0;
+    font-weight: 600;
+    color: #ffd580;
+    font-size: 1.2em;
+  }
+  .btn {
+    background: #ff9800;
+    color: white;
+    padding: 12px 30px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-block;
+    transition: background 0.3s ease;
+  }
+  .btn:hover {
+    background: #ffa726;
+  }
+  /* Slider */
+  .slider {
+    position: relative;
+    height: 150px;
+    margin: 2em auto 1em;
+    overflow: hidden;
+  }
+  .slide {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out;
+    max-height: 140px;
+    max-width: 100%;
+    user-select: none;
+  }
+  .slide.active {
+    opacity: 1;
+    position: relative;
+  }
+  /* Nav Buttons */
+  .nav-buttons {
+    margin-top: 15px;
+  }
+  .nav-buttons button {
+    background: #ff9800;
+    border: none;
+    color: white;
+    font-weight: 700;
+    padding: 10px 20px;
+    margin: 0 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .nav-buttons button:hover {
+    background: #ffa726;
+  }
+  @media (max-width: 600px) {
+    h1 { font-size: 2em; }
+    h2 { font-size: 1.2em; }
+    .slide { max-height: 100px; }
+  }
+</style>
+</head>
+<body>
+
+<header>MHS Consultancy</header>
+
+<section id="intro">
+  <img src="MHSconsultancy.png" alt="MHS Consultancy Logo" style="max-width:140px; margin-bottom:20px;" />
+  <h1>Hanif Sattar</h1>
+  <h2>Professional Compliance Consultant</h2>
+  <p>
+    I started MHS Consultancy in 2018 with a vision to help businesses comply with regulatory standards efficiently and professionally. 
+    Over the years, I have worked with leading clients across the textile and apparel industry, providing trusted guidance and audits.
+  </p>
+  <div class="contact">📞 +92-3032038324</div>
+  <a class="btn" href="#clients">View Clients</a>
+</section>
+
+<section id="clients">
+  <h2>Our Valued Clients</h2>
+  <div class="slider" aria-label="Client logos slider" role="region">
+    <!-- Slides will be injected here -->
+  </div>
+  <div class="nav-buttons">
+    <button aria-label="Previous client" id="prevBtn">⟨ Prev</button>
+    <button aria-label="Next client" id="nextBtn">Next ⟩</button>
+  </div>
+  <a class="btn" href="#intro">⬆ Back to Top</a>
+</section>
+
+<script>
+  const clients = [
+    { name: "MAK Garments", logo: "client-logosmak.png" },
+    { name: "Linkotex Sourcing", logo: "client-logoslinkotex.png" },
+    { name: "Rajwani", logo: "client-logosrajwani.png" },
+    { name: "Rototex", logo: "client-logosrototex.png" },
+    { name: "Ahmed and Sons", logo: "client-logosahmedandsons.png" },
+    { name: "AA", logo: "client-logosaa.png" },
+    { name: "Hayat Industries", logo: "client-logos/hayatindustries.png" },
+    { name: "Kings Apparels", logo: "client-logos/kingsapparels.png" },
+    { name: "Five Star Apparel", logo: "client-logos/fivestarapparel.png" },
+    { name: "Omar Group", logo: "client-logos/omargroup.png" },
+    { name: "MR Industries", logo: "client-logos/mrindustries.png" },
+    { name: "Ayoub Textile", logo: "client-logos/ayoubtextile.png" }
+  ];
+
+  const slider = document.querySelector('.slider');
+
+  let current = 0;
+  let slides = [];
+
+  function createSlides() {
+    clients.forEach((client, i) => {
+      const img = document.createElement('img');
+      img.src = client.logo;
+      img.alt = client.name;
+      img.className = 'slide';
+      if(i === 0) img.classList.add('active');
+      slider.appendChild(img);
+      slides.push(img);
+    });
+  }
+
+  function showSlide(index) {
+    slides.forEach((slide, i) => {
+      slide.classList.toggle('active', i === index);
+    });
+  }
+
+  function nextSlide() {
+    current = (current + 1) % slides.length;
+    showSlide(current);
+  }
+
+  function prevSlide() {
+    current = (current - 1 + slides.length) % slides.length;
+    showSlide(current);
+  }
+
+  createSlides();
+
+  document.getElementById('nextBtn').addEventListener('click', nextSlide);
+  document.getElementById('prevBtn').addEventListener('click', prevSlide);
+
+  // Auto slide every 5 seconds
+  setInterval(nextSlide, 5000);
+
+  // Optional: keyboard navigation
+  document.addEventListener('keydown', e => {
+    if(e.key === "ArrowRight") nextSlide();
+    else if(e.key === "ArrowLeft") prevSlide();
+  });
+</script>
+
+</body>
+</html>
